@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "istream": "cpp",
+        "iostream": "cpp",
+        "random": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "ostream": "cpp",
+        "numeric": "cpp",
+        "test": "cpp"
+    },
+    "C_Cpp.intelliSenseEngineFallback": "Disabled",
+    "python.pythonPath": "/bin/python3.8",
+    "editor.fontFamily": "'Jetbrains Mono', monospace",
+    "editor.minimap.enabled": false,
+    "C_Cpp.dimInactiveRegions": false,
+}
