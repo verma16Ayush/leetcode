@@ -1,51 +1,19 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-class Solution {
-public:
-    vector<pair<int, int>> dir;
-    bool dfs(vector<vector<char>>& board, int i, int j, string w, int m)
-    {
-        if(i >= board.size() || j >= board[0].size() || i < 0 || j < 0) return false; 
-        if(m == w.length()) return true;
-        if(board[i][j] == w[m])
-        {
-            for(auto d : dir)
-            {
-                if(dfs(board, i + d.first, j + d.second, w, m + 1)) return true;
-            }
-        }
-        return false;
-    }
-    bool exist(vector<vector<char>>& board, string word) 
-    {
-        dir = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-        bool res = false;
-        for(int i = 0; i < board.size(); i++)
-        {
-            for(int j = 0; j < board[0].size(); j++)
-            {
-                if(board[i][j] == word[0]) res = res || dfs(board, i, j, word, 0); 
-            }
-        }
-        return res;
-    }
-};
 /** 
  *
  * @author - Ayush
  * @title - test.cpp
- * @createdOn - 2021-05-20 16:16 Hrs
+ * @createdOn - 2021-05-21 22:18 Hrs
  * 
  **/
-
+#include <iostream>
+#include <bits/stdc++.h>
 #define nl '\n'
 #define int ll
 #define MOD (ll)(1e9 + 7)
 #define fastIO ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
 typedef long double ld;
-using namespace std;
 typedef long long ll;
+using namespace std;
 
 ll PowModulo(ll a, ll b)
 {
@@ -77,17 +45,16 @@ vector<int> PrefixSum(const vector<int>& a)
 int32_t main()
 {
     #ifdef LOCAL_PROJECT
-        freopen("input.in", "r", stdin);
-        freopen("output.out", "w", stdout);
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
     #endif
     fastIO
-    vector<vector<char>> a;
-    for(auto& tem : a)
+    int tc;
+    cin >> tc;
+    cin.ignore();
+    while(tc--)
     {
-        for(char& c : tem) cin >> c;
+        cout << "hello" << nl;
     }
-
-    Solution sol;
-    cout << sol.exist(a, "ABCB") << nl;
     return 0;
 }

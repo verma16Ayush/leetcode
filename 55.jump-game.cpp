@@ -9,15 +9,15 @@ using namespace std;
 // @lc code=start
 class Solution {
 public:
-    int dp[(int)3e4 + 2];
-    bool Check(vector<int>& a, int n)
+    vector<int> dp;
+    bool canJump(vector<int>& a)
     {
-        if(n == 1 && a[n - 1] > 0) dp[n] = 1;
-        if()
-    }
-    bool canJump(vector<int>& nums) 
-    {
-        memset(dp, -1, sizeof(dp));
+        int lastReachable = a.size() - 1;
+        for(int i = a.size() - 1; i >= 0; i--)
+        {
+            if(i + a[i] >= lastReachable) lastReachable = i;
+        }
+        return lastReachable == 0;
     }
 };
 // @lc code=end
