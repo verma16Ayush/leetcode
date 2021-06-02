@@ -7,29 +7,30 @@
 // @lc code=start
 #include <bits/stdc++.h>
 using namespace std;
-// struct TreeNode {
-//     int val;
-//     TreeNode *left;
-//     TreeNode *right;
-//     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-// };
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x = 0) : val(x), left(NULL), right(NULL) {}
+};
 
 class Solution {
 public:
-    TreeNode* LCA(TreeNode* root, int l, int h)
-    {
-        if(!root) return nullptr;
-        if(root->val >= l && root->val < h) return root;
-        if(root->val <= l) return LCA(root->left, l, h);
-        if(root->val > h) return LCA(root->right, l, h);
-        return nullptr;
-    }
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        return LCA(root, p->val, q->val);
-    }
+
 };
 // @lc code=end
 
+TreeNode* BuildTree()
+{
+    int t;
+    cin >> t;
+    if(t == -1) return nullptr;
+    TreeNode* root = new TreeNode();
+    root->val = t;
+    root->left = BuildTree();
+    root->right = BuildTree();
+    return root;
+}
 
 
 int32_t main()
@@ -38,6 +39,8 @@ int32_t main()
         freopen("input.txt", "r", stdin);
         freopen("output.txt", "w", stdout);
     #endif
-    
+    TreeNode* root = BuildTree();
+    Solution sol;
+    cout << sol.lowestCommonAncestor(root, root->left, root->right)->val << endl;
     return 0;
 }
