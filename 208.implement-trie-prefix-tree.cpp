@@ -6,76 +6,70 @@
 
 // @lc code=start
 #include <bits/stdc++.h>
-struct Node;
-typedef std::unordered_map<char, Node*> hashmap;
 using namespace std;
-
-struct Node
+struct TrieNode;
+typedef unordered_map<char, TrieNode*> hash_map;
+struct TrieNode
 {
-    char c;
-    hashmap hm;
-    int isTerminal;
-    Node(char c = '\0')
+    char startsWith;
+    hash_map next_list;
+    int is_terminal;
+    TrieNode(char c = '\0')
     {
-        this->c = c;
-        isTerminal = 0;
+        this->startsWith = c;
+        is_terminal = 0;
     }
 };
 
 class Trie {
+
 private:
-    /** Initialize your data structure here. */
-    Node* root;
-    
+    TrieNode* node;
 public:
+    /** Initialize your data structure here. */
     Trie() 
     {
-        root = new Node();
+        node = new TrieNode();
     }
+    
     /** Inserts a word into the trie. */
     void insert(string word) 
     {
-        Node* cur = root;
-        int i = 0;
-        while(cur->hm.find(word[i]) != cur->hm.end() && cur->hm[word[i]])
+        TrieNode* cur = this->node;
+        for(int i = 0; i < word.length(); i++)
         {
-            cur = cur->hm.find(word[i])->second;
-            i++;
+            if(cur->next_list.find(word[i]) != cur->next_list.end()) cur = cur->next_list[word[i]];
+            else 
+            {
+                cur->next_list[word[i]] = new TrieNode(word[i]);
+                cur = cur->next_list[word[i]];
+            }
         }
-        while(i != word.length())
-        {
-            Node* newNode = new Node(word[i]);
-            cur->hm[word[i]] = newNode;
-            cur = cur->hm[word[i]];
-            i++;
-        }
-        cur->isTerminal = true;
+        cur->is_terminal = 1;
     }
     
     /** Returns if the word is in the trie. */
     bool search(string word) 
     {
-        Node* cur = root;
-        int i = 0;
-        while(cur && cur->hm.find(word[i]) != cur->hm.end())
+        TrieNode* cur = this->node;
+        for(int i = 0; i < word.length(); i++)
         {
-            cur = cur->hm[word[i]];
-            i++;
+            if(cur->next_list.find(word[i]) == cur->next_list.end()) return false;
+            else cur = cur->next_list[word[i]];
         }
-        return i == word.length() && cur->isTerminal;
+        return cur->is_terminal;
     }
     
     /** Returns if there is any word in the trie that starts with the given prefix. */
-    bool startsWith(string prefix) 
+    bool startsWith(string word) 
     {
-        Node* cur = root;
-        int i = 0;
-        while(i < prefix.length() && cur->hm.find(prefix[i]) != cur->hm.end())
+        TrieNode* cur = this->node;
+        for(int i = 0; i < word.length(); i++)
         {
-            cur = cur->hm[prefix[i]];
-            i++;
+            if(cur->next_list.find(word[i]) == cur->next_list.end()) return false;
+            else cur = cur->next_list[word[i]];
         }
-        return i == prefix.length();
+        return true;
     }
 };
 

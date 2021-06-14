@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=560 lang=cpp
+ * @lc app=leetcode id=128 lang=cpp
  *
- * [560] Subarray Sum Equals K
+ * [128] Longest Consecutive Sequence
  */
 
 // @lc code=start
@@ -9,7 +9,7 @@
 using namespace std;
 class Solution {
 public:
-    int subarraySum(vector<int>& nums, int k) 
+    int longestConsecutive(vector<int>& nums)
     {
         
     }

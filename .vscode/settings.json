@@ -9,11 +9,21 @@
         "unordered_set": "cpp",
         "ostream": "cpp",
         "numeric": "cpp",
-        "test": "cpp"
+        "test": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "vector": "cpp",
+        "bitset": "cpp",
+        "forward_list": "cpp",
+        "functional": "cpp",
+        "fstream": "cpp",
+        "streambuf": "cpp",
+        "variant": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Disabled",
     "python.pythonPath": "/bin/python3.8",
     "editor.fontFamily": "'Jetbrains Mono', monospace",
     "editor.minimap.enabled": false,
     "C_Cpp.dimInactiveRegions": false,
+    "editor.fontSize": 14
 }

@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=560 lang=cpp
+ * @lc app=leetcode id=1277 lang=cpp
  *
- * [560] Subarray Sum Equals K
+ * [1277] Count Square Submatrices with All Ones
  */
 
 // @lc code=start
@@ -9,7 +9,7 @@
 using namespace std;
 class Solution {
 public:
-    int subarraySum(vector<int>& nums, int k) 
+    int countSquares(vector<vector<int>>& matrix) 
     {
         
     }

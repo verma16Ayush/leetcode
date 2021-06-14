@@ -42,7 +42,6 @@ class WordDictionary {
 private:
     /** Initialize your data structure here. */
     Node* root;
-    
 public:
     WordDictionary() 
     {
@@ -69,30 +68,25 @@ public:
     }
     
     /** Returns if the word is in the trie. */
+    bool search_help(string word, int i, Node* root)
+    {
+        if(i == word.length() && root->isTerminal) return true;
+        if(word[i] != '.' && root->hm.find(word[i]) == root->hm.end()) return false;
+        if(word[i] != '.' && root->hm.find(word[i]) != root->hm.end()) return search_help(word, i + 1, root->hm[word[i]]);
+        bool ans = false;
+        for(auto it = root->hm.begin(); it != root->hm.end(); it++)
+        {
+            ans = ans || search_help(word, i + 1, it->second);
+        }
+        return ans;
+    }
+
     bool search(string word) 
     {
-        Node* cur = root;
-        int i = 0;
-        while(cur && cur->hm.find(word[i]) != cur->hm.end())
-        {
-            cur = cur->hm[word[i]];
-            i++;
-        }
-        return i == word.length() && cur->isTerminal;
+        return search_help(word, 0, this->root);
     }
     
     /** Returns if there is any word in the trie that starts with the given prefix. */
-    bool startsWith(string prefix) 
-    {
-        Node* cur = root;
-        int i = 0;
-        while(i < prefix.length() && cur->hm.find(prefix[i]) != cur->hm.end())
-        {
-            cur = cur->hm[prefix[i]];
-            i++;
-        }
-        return i == prefix.length();
-    }
     
 };
 

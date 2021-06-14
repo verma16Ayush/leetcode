@@ -71,4 +71,3 @@ int32_t main()
     cout << obj->get(4) << endl;    // return 4
     return 0;
 }
-

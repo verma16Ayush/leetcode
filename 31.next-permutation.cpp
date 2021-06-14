@@ -20,7 +20,7 @@ public:
         for(i = a.size() - 1; i - 1 >= 0; i--)
         {
             if(a[i - 1] >= a[i]) continue;
-            else break;
+            else break; 
         }
         int k = i - 1;
         for(i = a.size() - 1; i >= 0; i--)

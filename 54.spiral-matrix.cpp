@@ -12,42 +12,88 @@ class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& a) 
     {
+        int up = 0, down = a.size() - 1;
+        int left = 0, right = a[0].size() - 1;
         vector<int> ans;
-        ans.reserve(a.size() * a[0].size());
-        int i = 0;
-        int k = 0;
-        int cs = a[0].size();
-        int rs = a.size();
-
-        while(ans.size() != a.size() * a[0].size())
+        // vector<pair<int, int>> dir = {{1, 0}, {0, -1}, {-1, 0}, {0, 1}};
+        int d = 0;
+        while(true)
         {
-            for(int l = 0 + k; l < cs - k; l++)
+            if(ans.size() == (a.size() * a[0].size())) break;
+            if(d == 0)
             {
-                ans.push_back(a[k][l]);
+                for(int i = left; i <= right; i++)
+                {
+                    ans.push_back(a[up][i]);
+                }
+                up++;
+                d = (d + 1) % 4;
             }
 
-            if(ans.size() == a.size() * a[0].size()) break;
-            for(int l = 0 + k + 1; l < rs - k; l++)
+            if(ans.size() == (a.size() * a[0].size())) break;
+            if(d == 1)
             {
-                ans.push_back(a[l][cs - k - 1]);
+                for(int i = up; i <= down; i++)
+                {
+                    ans.push_back(a[i][right]);
+                }
+                right--;
+                d = (d + 1) % 4;
             }
 
-            if(ans.size() == a.size() * a[0].size()) break;
-            for(int l = 0 + k + 1; l < cs - k; l++)
+            if(ans.size() == (a.size() * a[0].size())) break;
+            if(d == 2)
             {
-                ans.push_back(a[rs - k - 1][cs - l - 1]);
+                for(int i = right; i >= left; i--)
+                {
+                    ans.push_back(a[down][i]);
+                }
+                down--;
+                d = (d + 1) % 4;
             }
-            if(ans.size() == a.size() * a[0].size()) break;
 
-            k++;
-            for(int l = 0 + k + 1; l < rs - k; l++)
+            if(ans.size() == (a.size() * a[0].size())) break;
+            if(d == 3)
             {
-                ans.push_back(a[rs - k - 1][k - 1]);
+                for(int i = down; i >= up; i--)
+                {
+                    ans.push_back(a[i][left]);
+                }
+                left++;
+                d = (d + 1) % 4;
             }
-            if(ans.size() == a.size() * a[0].size()) break;
         }
         return ans;
     }
 };
 // @lc code=end
 
+void PrintMat(vector<vector<int>> a)
+{
+    for(vector<int> i : a)
+    {
+        for(int j : i)
+        {
+            cout << j << " ";
+        }
+        cout << endl;
+    }
+}
+
+int32_t main()
+{
+    #ifdef LOCAL_PROJECT
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    vector<vector<int>> a(3, vector<int>(4));
+    for(auto& i : a)
+    {
+        for(int& j : i) cin >> j;
+    }
+    PrintMat(a);
+    Solution sol;
+    vector<int> ans = sol.spiralOrder(a);
+
+    return 0;
+}

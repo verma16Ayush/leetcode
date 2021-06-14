@@ -8,34 +8,44 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// struct ListNode {
-//     int val;
-//     ListNode *next;
-//     ListNode() : val(0), next(nullptr) {}
-//     ListNode(int x) : val(x), next(nullptr) {}
-//     ListNode(int x, ListNode *next) : val(x), next(next) {}
-// };
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+struct cmp
+{
+    bool operator()(ListNode* a, ListNode* b)
+    {
+        return a->val > b->val;
+    }
+};
+
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) 
     {
-        ListNode* res = new ListNode();
-        ListNode* cp = res;
-        ListNode* min = lists[0];
-        int mini = 0;
-        while(lists[mini])
+        if(lists.empty()) return nullptr;
+        ListNode* merged = new ListNode();
+        ListNode* mergecp = merged;
+        priority_queue<ListNode*, vector<ListNode*>, cmp> pq;
+        for(ListNode* l : lists)
         {
-            int i = 0;
-            for(i; i < lists.size(); i++)
-            {
-                if(lists[i] == nullptr) continue;
-                if(lists[i]->val < lists[mini]->val) mini = i;
-            }
-            res->next = new ListNode(lists[mini]->val);
-            res = res->next;
-            lists[mini] = lists[mini] ? lists[mini]->next : nullptr;
+            if(l) pq.push(l);
         }
-        return cp->next;
+
+        while(pq.size())
+        {
+            ListNode* top = pq.top();
+            pq.pop();
+            merged->next = new ListNode(top->val);
+            merged = merged->next;
+            if(top->next) pq.push(top->next);
+        }
+        return mergecp->next;
     }
 };
 // @lc code=end

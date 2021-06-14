@@ -19,67 +19,102 @@ struct Flows
     }
 };
 
+// ~600ms. I can do better than this.
+
+/*
+*/
 class Solution 
 {
 public:
-    int dp[300][300][2]; // dp[r][c][0] = atlantic, dp[r][c][1] = pacific
-    vector<pair<int, int>> dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-    int dfsToA(vector<vector<int>>& heights, int R, int C, int r, int c)
+    vector<pair<int, int>> dir;
+    vector<vector<bool>> ToP;
+    vector<vector<bool>> ToA;
+
+    bool DfsToP(vector<vector<int>>& heights, int i, int j)
     {
-        if(r >= R - 1 || c >= C - 1) return dp[r][c][0] = 1;
-        if(dp[r][c][0] != -1) return dp[r][c][0];
-        if(heights[r][c] == -1) return dp[r][c][0] = 0;
-        int temp = heights[r][c];
-        heights[r][c] = -1;
-        for(auto d : dir)
+        if(i == 0 || j == 0) return ToP[i][j] = 1;
+        // if(i == heights.size() || j == heights[0].size()) return ToP[i][j] = 0;
+        if(heights[i][j] != -1)
         {
-            if(r + d.first >= R || c + d.second >= C) return 1;
-            else if(heights[r][c] >= temp) return dp[r][c][0] = dfsToA(heights, R, C, r + d.first, c + d.second);
+            for(auto d : dir)
+            {
+                if(i + d.first < heights.size() && j + d.second < heights[0].size() && heights[i + d.first][j + d.second] <= heights[i][j])
+                {
+                    int k = heights[i][j];
+                    heights[i][j] = -1;
+                    ToP[i][j] = ToP[i][j] || DfsToP(heights, i + d.first, j + d.second);
+                    heights[i][j] = k;
+                }
+            }
         }
-        heights[r][c] = temp;
-        return dp[r][c][0];
+        return ToP[i][j];
     }
-    int dfsToP(vector<vector<int>>& heights, int R, int C, int r, int c)
+    bool DfsToA(vector<vector<int>>& heights, int i, int j)
     {
-        if(r <= 0 || c <= 0) return dp[r][c][1] = 1;
-        if(dp[r][c][1] != -1) return dp[r][c][1];
-        if(heights[r][c] == -1) return dp[r][c][1] = 0;
-        int temp = heights[r][c];
-        heights[r][c] = -1;
-        for(auto d : dir)
+        // if(i == 0 || j == 0) return ToP[i][j] = 0;
+        if(i == heights.size() - 1 || j == heights[0].size() - 1) return ToA[i][j] = 1;
+        if(heights[i][j] != -1)
         {
-            if(r + d.first < 0 || c + d.second < 0) return 1;
-            else if(heights[r][c] >= temp) return dp[r][c][1] = dfsToP(heights, R, C, r + d.first, c + d.second);
+            for(auto d : dir)
+            {
+                if(i + d.first >= 0 && j + d.second >= 0 && heights[i + d.first][j + d.second] <= heights[i][j])
+                {
+                    int k = heights[i][j];
+                    heights[i][j] = -1;
+                    ToA[i][j] = ToA[i][j] || DfsToA(heights, i + d.first, j + d.second);
+                    heights[i][j] = k;
+                }
+            }
         }
-        heights[r][c] = temp;
-        return dp[r][c][1];
+        return ToA[i][j];
     }
 
     vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) 
     {
-        int R = heights.size();
-        int C = heights[0].size();
-        memset(dp, -1, sizeof(dp));
-
-        for(int i = 0; i < R; i++)
+        ToP = vector<vector<bool>>(heights.size(), vector<bool>(heights[0].size(), false));
+        ToA = vector<vector<bool>>(heights.size(), vector<bool>(heights[0].size(), false));
+        dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        for(int i = 0; i < heights.size(); i++)
         {
-            for(int j = 0; j < C; j++)
+            for(int j = 0; j < heights[0].size(); j++)
             {
-                dfsToP(heights, R, C, i, j);
-                dfsToA(heights, R, C, i, j);
+                if(!ToP[i][j]) DfsToP(heights, i, j);
+                if(!ToA[i][j]) DfsToA(heights, i, j);
             }
         }
         vector<vector<int>> ans;
-        for(int i = 0; i < R; i++)
+        for(int i = 0; i < ToP.size(); i++)
         {
-            for(int j = 0; j < C; j++)
+            for(int j = 0; j < ToP[0].size(); j++)
             {
-                if(dp[i][j][0] && dp[i][j][1]) ans.push_back({i, j});
+                if(ToP[i][j] && ToA[i][j]) ans.push_back({i, j});
             }
         }
         return ans;
     }
 };
 
+// class Solution
+// {
+// public:
+//     vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights)
+//     {
+
+//     }
+// };
+
 // @lc code=end
 
+
+int32_t main()
+{
+    #ifdef LOCAL_PROJECT
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    vector<vector<int>> a = {{1,2,2,3,5},{3,2,3,4,4},{2,4,5,3,1},{6,7,1,4,5},{5,1,1,2,4}};
+    Solution sol;
+    vector<vector<int>> ans = sol.pacificAtlantic(a);
+
+    return 0;
+}

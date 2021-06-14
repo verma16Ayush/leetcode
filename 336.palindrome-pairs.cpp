@@ -1,15 +1,16 @@
 /*
- * @lc app=leetcode id=560 lang=cpp
+ * @lc app=leetcode id=336 lang=cpp
  *
- * [560] Subarray Sum Equals K
+ * [336] Palindrome Pairs
  */
 
 // @lc code=start
 #include <bits/stdc++.h>
 using namespace std;
+
 class Solution {
 public:
-    int subarraySum(vector<int>& nums, int k) 
+    vector<vector<int>> palindromePairs(vector<string>& words) 
     {
         
     }
