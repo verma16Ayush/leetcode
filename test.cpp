@@ -1,46 +1,65 @@
-/** 
- *
- * @author - Ayush
- * @title - test.cpp
- * @createdOn - 2021-05-21 22:18 Hrs
- * 
- **/
-#include <iostream>
 #include <bits/stdc++.h>
-#define nl '\n'
-#define int ll
-#define MOD (ll)(1e9 + 7)
-#define fastIO ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-typedef long double ld;
-typedef long long ll;
 using namespace std;
 
-ll PowModulo(ll a, ll b)
+// self defined struct to 
+// hold the position of snake
+struct Pos
 {
-    ll res = 1;
-    a = a % MOD;
-    if(b == 0) return 1;
-    if(a == 0) return 0;
-    while(b)
+    int x;
+    int y;
+    Pos(int _x = 0, int _y = 0)
     {
-        if(b & 1) res = (res * a) % MOD;
-        b = b >> 1;
-        a = (a * a) % MOD;
+        this->x = _x;
+        this->y = _y;
     }
-    return res;
-}
+};
 
-vector<int> PrefixSum(const vector<int>& a)
+class Snake
 {
-    vector<int> ps(a.size() + 1);
-    ps[0] = 0;
-    for(int i = 1; i <= a.size(); i++)
+private:
+    int play_width; // right bound
+    int play_height; // height bound
+    Pos loc; // position of snake's head
+    void Invariant()
     {
-        ps[i] = a[i - 1];
-        ps[i] += ps[i - 1];
+        assert(loc.x >= 0 && loc.x <= play_width);
+        assert(loc.y >= 0 && loc.y <= play_height);
     }
-    return ps;
-}
+public:
+    // initialise the snake object with _width ans _height bounds
+    // ans posx, posy current position
+    Snake(int _width, int _height, Pos _p)
+    {
+        this->play_width = _width;
+        this->play_height = _height;
+        this->loc.x = _p.x;
+        this->loc.y = _p.y;
+        // call the invariant to ensure the object
+        // was constructed correctly
+        Invariant();
+    }
+
+    // teleport and add inc.x units to current X coordinate
+    // ans inc.y units to Y coordinate of snake 
+    void TeleportAhead(Pos inc)  
+    {
+        loc.x += inc.x;
+        loc.y += inc.y;
+        //ensure that our snake wasn't 
+        // teleported out of play bounds
+        Invariant();
+    }
+
+    // return current position
+    // calling invariant is unnecessary
+    // because this is an accessor method
+    Pos GetLoc()
+    {
+        return loc;
+    }
+};
+
+
 
 int32_t main()
 {
@@ -48,13 +67,16 @@ int32_t main()
         freopen("input.txt", "r", stdin);
         freopen("output.txt", "w", stdout);
     #endif
-    fastIO
-    int tc;
-    cin >> tc;
-    cin.ignore();
-    while(tc--)
-    {
-        cout << "hello" << nl;
-    }
+
+    Snake snek(30, 20, Pos(5, 5));
+
+    // will throw assert error because
+    // our snake is teleported out of bound
+    // snek.TeleportAhead(Pos(40, 40));
+
+    // will also fail Invariant() assertion
+    // because the snake is being spawned out
+    // of bounds
+    // Snake snek2(10, 10, Pos(12, 8));
     return 0;
 }

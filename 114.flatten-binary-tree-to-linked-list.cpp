@@ -19,23 +19,48 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+
 class Solution {
 public:
-    TreeNode* Flatten(TreeNode* root, TreeNode* cp)
+    TreeNode* prev;
+    void Help(TreeNode* root)
     {
-        if(!root) return cp = nullptr;
-        cp = new TreeNode(root->val);
-        cp->left = nullptr;
-        cp = cp->right;
-        Flatten(root->left, cp);
-        Flatten(root->right, cp);
-        return cp;
+        if(!root) return;
+        Help(root->right);
+        Help(root->left);
+        root->right = prev;
+        root->left = nullptr;
+        prev = root;
     }
     void flatten(TreeNode* root) 
     {
-        if(!root) return;  
-
+        Help(root);
     }
 };
 // @lc code=end
 
+TreeNode* BuildTree()
+{
+    int n;
+    cin >> n;
+    if(n == -1) return nullptr;
+    TreeNode* root = new TreeNode(n);
+    root->left = BuildTree();
+    root->right = BuildTree();
+    return root;
+}
+
+int32_t main()
+{
+    #ifdef LOCAL_PROJECT
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    vector<int> a = {1, 2, 3, -1, -1, 4, -1, -1, 5, -1, 6, -1, -1};
+    int i = 0;
+    TreeNode* root = BuildTree();
+    Solution sol;
+    sol.flatten(root);
+
+    return 0;
+}
