@@ -1,15 +1,12 @@
 /*
- * @lc app=leetcode id=206 lang=cpp
+@lc app=leetcode id=25 lang=cpp
  *
- * [206] Reverse Linked List
+[25] Reverse Nodes in k-Group
  */
 
 /**
- * Definition for singly-linked list.
+Definition for singly-linked list.
  */
-#include<bits/stdc++.h>
-using namespace std;
-
 struct ListNode {
     int val;
     ListNode *next;
@@ -17,8 +14,9 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
+#include <bits/stdc++.h>
+using namespace std;
 // @lc code=start
-
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) 
@@ -32,6 +30,16 @@ public:
             head = next;
         }
         return cur;   
+    }
+
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        int c = 0;
+        ListNode* cur = head;
+        while(cur)
+        {
+            ListNode*& href = head; 
+
+        }
     }
 };
 // @lc code=end

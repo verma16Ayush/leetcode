@@ -58,10 +58,14 @@ int32_t main()
         freopen("output.txt", "w", stdout);
     #endif
     fastIO
-    int n, a, b, c;
-    cin >> n >> a >> b >> c;
-    dp = vector<int>(n + 1);
-    memset(&dp[0], -1, (n + 1) * sizeof(int));
-    cout << solve(n, a, b, c);
+    auto k = default_random_engine(0);
+
+    int i = k();
+    cout << i;
+    cout << k() << nl;
+    cout << k() << nl;
+    cout << k() << nl;
+    cout << k() << nl;
+    cout << k() << nl;
     return 0;
 }

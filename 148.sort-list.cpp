@@ -4,7 +4,6 @@
 [148] Sort List
  */
 
-// @lc code=start
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -15,59 +14,59 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
+// @lc code=start
 
 class Solution {
 public:
-    ListNode* Merge(ListNode* head1, ListNode* head2)
-    {
-        auto cur1 = head1;
-        auto cur2 = head2;
-
-        auto newNode = new ListNode();
-        auto cp = newNode;
-
-        while(cur1 != nullptr && cur2 != nullptr)
-        {
-            newNode->next = cur1->val < cur2->val ? cur1 : cur2;
-            cur1->val < cur2->val ? cur1 = cur1->next : cur2 = cur2->next;
-            newNode = newNode->next;
-        }
-
-        while(cur1 != nullptr)
-        {
-            newNode->next = cur1;
-            cur1 = cur1->next;
-            newNode = newNode->next;
-        }
-
-        while(cur2 != nullptr)
-        {
-            newNode->next = cur2;
-            cur2 = cur2->next;
-            newNode = newNode->next;
-        }
-
-        return cp->next; 
-    }
-    ListNode* sortList(ListNode* head) 
-    {
-        if(head == nullptr || head->next == nullptr) return head;
-
-        // Find middle
-        auto fast = head, slow = head->next;
+    ListNode* middleNode(ListNode* head) {
+        if(!head || !head->next) return head;
+        auto h2 = new ListNode();
+        h2->next = head;
+        ListNode* fast = h2;
+        ListNode* slow = h2;
+        ListNode* pre = nullptr;
         while(fast != nullptr && fast->next != nullptr)
         {
             slow = slow->next;
             fast = fast->next->next;
         }
+        return slow;
+    }
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
+    {
+        ListNode* mergedList = new ListNode();
+        auto mcp = mergedList;
+        ListNode* cur1 = l1;
+        ListNode* cur2 = l2;
+        while(cur1 && cur2)
+        {
+            if(cur1->val <= cur2->val)
+            {
+                mcp->next = cur1;
+                cur1 = cur1->next;
+            }
+            else
+            {
+                mcp->next = cur2;
+                cur2 = cur2->next;
+            }
+            mcp = mcp->next;
+        }
+        if(cur1) mcp->next = cur1;
+        else if(cur2) mcp->next = cur2;
+        return mergedList->next;
+    }
+    ListNode* sortList(ListNode* head) 
+    {
+        if (head == nullptr || head->next == nullptr)
+            return head;
 
-        ListNode* list2 = slow->next;
-        slow->next = nullptr;
-
+        ListNode* mid = middleNode(head);
+        ListNode* l2 = sortList(mid->next);
+        mid->next = nullptr;
         ListNode* l1 = sortList(head);
-        ListNode* l2 = sortList(list2);
         
-        return Merge(l1, l2);
+        return mergeTwoLists(l1, l2);
     }
 };
 // @lc code=end

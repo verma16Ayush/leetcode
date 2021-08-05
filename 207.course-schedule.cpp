@@ -42,18 +42,15 @@ public:
     bool DetectCycle(Node* source)
     {
 
-        if(visited.find(source) == visited.end())
-        {
-            visited.insert(source);
-            inStack.insert(source);
+        visited.insert(source);
+        inStack.insert(source);
 
-            for(auto n : source->neighbors)
-            {
-                if(visited.find(n) != visited.end() && inStack.find(n) != inStack.end()) return true;
-                else if(DetectCycle(n)) return true;
-            }
-            inStack.erase(source);
+        for(auto n : source->neighbors)
+        {
+            if(visited.find(n) != visited.end() && inStack.find(n) != inStack.end()) return true;
+            if(visited.find(n) == visited.end()) if(DetectCycle(n)) return true;
         }
+        inStack.erase(source);
         return false;
     }
 

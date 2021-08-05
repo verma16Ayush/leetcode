@@ -30,4 +30,13 @@ public:
     }
 };
 // @lc code=end
-
+int32_t main()
+{
+    #ifdef LOCAL_PROJECT
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    vector<int> a = {3,2,4};
+    auto temp = Solution().twoSum(a, 6);
+    return 0;
+}

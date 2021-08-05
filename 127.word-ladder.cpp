@@ -9,11 +9,21 @@
 using namespace std;
 class Solution {
 public:
-    map<string, int> mp;
+    unordered_set<string> mp;
+
+    void convert(string word)
+    {
+        for(char c = )
+    }
+
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) 
     {
-        
+        for(string str : wordList)
+        {
+            mp.insert(str);
+        }
     }
+
 };
 // @lc code=end
 
