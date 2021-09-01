@@ -1,137 +1,64 @@
-/** 
- *
- * @author - Ayush
- * @title - aa.cpp
- * @createdOn - 2021-03-17 17:07 Hrs
- * 
- **/
 #include <iostream>
-#include <bits/stdc++.h>
-#define nl '\n'
-#define int ll
-#define MOD (ll)(1e9 + 7)
-#define fastIO ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-typedef long double ld;
-typedef long long ll;
 using namespace std;
-
-ll PowModulo(ll a, ll b)
+ 
+// Returns true if there exists a subsequence of `arr[0…n)` with the given sum
+bool subsetSum(int arr[], int n, int sum)
 {
-    ll res = 1;
-    a = a % MOD;
-    if(b == 0) return 1;
-    if(a == 0) return 0;
-    while(b)
-    {
-        if(b & 1) res = (res * a) % MOD;
-        b = b >> 1;
-        a = (a * a) % MOD;
+    // `T[i][j]` stores true if subset with sum `j` can be attained
+    // using items up to first `i` items
+    bool T[sum + 1][n + 1];
+ 
+    // if 0 items in the list and the sum is non-zero
+    for (int j = 1; j <= sum; j++) {
+        T[0][j] = false;
     }
-    return res;
-}
-
-vector<int> PrefixSum(const vector<int>& a)
-{
-    vector<int> ps(a.size() + 1);
-    ps[0] = 0;
-    for(int i = 1; i <= a.size(); i++)
-    {
-        ps[i] = a[i - 1];
-        ps[i] += ps[i - 1];
+ 
+    // if the sum is zero
+    for (int i = 0; i <= n; i++) {
+        T[i][0] = true;
     }
-    return ps;
-}
-
-int Sum(vector<int>& a)
-{
-    int sum = 0;
-    for(int& i : a)
+ 
+    // do for i'th item
+    for (int i = 1; i <= n; i++)
     {
-        sum += i;
-    }
-    return sum;
-}
-
-int CheckMp(map<int, int>& a, map<int, int>& b)
-{
-    map<int, int>::iterator i = a.begin();
-    map<int, int>::iterator j = b.begin();
-    while(i != a.end() && j != b.end())
-    {
-        if(i->first == j->first && i->second == j->second)
+        // consider all sum from 1 to sum
+        for (int j = 1; j <= sum; j++)
         {
-            i++;
-            j++;
-        }
-        else return false;
-    }
-    return true;
-}
-
-int32_t main()
-{
-    #ifdef LOCAL_PROJECT
-        freopen("input.in", "r", stdin);
-        freopen("output.out", "w", stdout);
-    #endif
-    fastIO
-    int n, m;
-    cin >> n >> m;
-    vector<int> a(n);
-    for(int& i : a) cin >> i;
-    vector<int> b(n);
-    for(int& i : b) cin >> i;
-
-    map<int, int> mpa;
-    map<int, int> mpb;
-
-    for(int i : b)
-    {
-        mpb[i]++;
-        mpa[i] = 0;
-    }
-    
-    for(int i : a)
-    {
-        mpa[i]++;
-    }
-
-    if(CheckMp(mpa, mpb))
-    {
-        cout << 0 << nl;
-        return 0;
-    }
-    int k = 0;
-    pair<int, int> sta;
-    pair<int, int> stb;
-    for(auto& i : mpa)
-    {
-        for(auto& j : mpb)
-        {
-            if(i.second == j.second)
-            {
-                if(abs(i.first - j.first) > k)
-                {
-                    sta = i;
-                    stb = j;
-                    k = abs(i.first - j.first);
-                }
+            // don't include the i'th element if `j-arr[i-1]` is negative
+            if (arr[i - 1] > j) {
+                T[i][j] = T[i - 1][j];
+            }
+            else {
+                // find the subset with sum `j` by excluding or including the i'th item
+                T[i][j] = T[i - 1][j] || T[i - 1][j - arr[i - 1]];
             }
         }
     }
-
-    if(k == 0)
-    {
-        cout << k << nl;
-        return 0;
+ 
+    // return maximum value
+    return T[n][sum];
+}
+ 
+// Subset Sum Problem
+int main()
+{
+    #ifdef LOCAL_PROJECT
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    // Input: a set of items and a sum
+    int arr[] = { 2, 3, 6, 7, 8, 10 };
+    int sum = 9;
+ 
+    // total number of items
+    int n = sizeof(arr) / sizeof(arr[0]);
+ 
+    if (subsetSum(arr, n, sum)) {
+        cout << "Subsequence with the given sum exists";
     }
-    if(sta.first < sta.second)
-    {
-        cout << k << nl;
+    else {
+        cout << "Subsequence with the given sum does not exist";
     }
-    else
-    {
-        cout << m - k << nl;
-    }
+ 
     return 0;
 }

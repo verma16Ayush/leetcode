@@ -27,8 +27,8 @@ public:
                     q.push({i, j});
                 else
                     mat[i][j] = INT16_MAX;
-            }
-        }
+            } // for(j)
+        } // for(i)
         while(q.size())
         {
             auto front = q.front();
@@ -41,10 +41,10 @@ public:
                     mat[front.first + d.first][front.second + d.second] = 1 + mat[front.first][front.second];
                 }
             }
-        }
+        } // while(q.size())
         return mat;
-    }
-};
+    } // updateMatrix
+}; // Solution
 // @lc code=end
 int32_t main()
 {

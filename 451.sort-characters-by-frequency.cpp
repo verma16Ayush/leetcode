@@ -1,13 +1,23 @@
+/*
+ * @lc app=leetcode id=451 lang=cpp
+ *
+ * [451] Sort Characters By Frequency
+ */
 #include <bits/stdc++.h>
 using namespace std;
-int32_t main()
-{
-    #ifdef LOCAL_PROJECT
-        freopen("input.txt", "r", stdin);
-        freopen("output.txt", "w", stdout);
-    #endif
-    ifstream f1("input.txt", ios::binary);
-    ofstream f2("output.txt", ios::binary);
-    f2 << f1.rdbuf();
-    return 0;
-}
+// @lc code=start
+class Solution {
+public:
+    string frequencySort(string s) {
+        auto freq = vector<int>(128);
+        for(char c : s) freq[c]++;
+        sort(s.begin(), s.end(), [&](const char& a, const char& b)->bool{
+            if(freq[a] != freq[b])
+                return freq[a] > freq[b];
+            return a > b;
+        });
+        return s;
+    }
+};
+// @lc code=end
+

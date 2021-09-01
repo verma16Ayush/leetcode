@@ -4,7 +4,6 @@
 [617] Merge Two Binary Trees
  */
 
-// @lc code=start
 #include <bits/stdc++.h>
 using namespace std;
 struct TreeNode {
@@ -16,6 +15,7 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+// @lc code=start
 class Solution {
 public:
     TreeNode* Merge(TreeNode* root1, TreeNode* root2)

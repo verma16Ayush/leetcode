@@ -1,52 +1,25 @@
-/** 
- *
- * @author - Ayush
- * @title - test111.cpp
- * @createdOn - 2021-07-10 00:07 Hrs
- * 
- **/
-#include <iostream>
 #include <bits/stdc++.h>
-#define nl '\n'
-#define int ll
-#define MOD (ll)(1e9 + 7)
-#define fastIO ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-typedef long double ld;
-typedef long long ll;
 using namespace std;
 
-ll PowModulo(ll a, ll b)
+vector<string> ans;
+void help(string& s, int i, string temp)
 {
-    ll res = 1;
-    a = a % MOD;
-    if(b == 0) return 1;
-    if(a == 0) return 0;
-    while(b)
+    if(i == s.length())
     {
-        if(b & 1) res = (res * a) % MOD;
-        b = b >> 1;
-        a = (a * a) % MOD;
+        ans.push_back(temp);
+        return;
     }
-    return res;
-}
-
-vector<int> PrefixSum(const vector<int>& a)
-{
-    vector<int> ps(a.size() + 1);
-    ps[0] = 0;
-    for(int i = 1; i <= a.size(); i++)
+    if(s[i] != '?')
     {
-        ps[i] = a[i - 1];
-        ps[i] += ps[i - 1];
+        temp.push_back(s[i]);
+        help(s, i + 1, temp);
     }
-    return ps;
-}
-
-void help()
-{
-    string str;
-    getline(cin, str);
-    cout << str << endl;
+    temp.push_back('0');
+    help(s, i + 1, temp);
+    temp.pop_back();
+    temp.push_back('1');
+    help(s, i + 1, temp);
+    return;
 }
 
 int32_t main()
@@ -55,7 +28,11 @@ int32_t main()
         freopen("input.txt", "r", stdin);
         freopen("output.txt", "w", stdout);
     #endif
-    fastIO
-    help();
+    string s = "??";
+    ans = vector<string>();
+    string st = "";
+    help(s, 0, st);
+    for(string s : ans) cout << s << endl;
+
     return 0;
 }

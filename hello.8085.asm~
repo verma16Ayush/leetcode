@@ -1,0 +1,3 @@
+lda 2050H
+adi 2
+hlt

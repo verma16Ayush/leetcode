@@ -4,7 +4,6 @@
 [19] Remove Nth Node From End of List
  */
 
-// @lc code=start
 
 struct ListNode {
     int val;
@@ -13,6 +12,7 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
+// @lc code=start
 
 class Solution {
 public:
@@ -42,7 +42,5 @@ public:
         return newHead->next;
     }
 };
-
-
 // @lc code=end
 
