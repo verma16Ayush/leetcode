@@ -3,7 +3,8 @@
  *
  * [4] Median of Two Sorted Arrays
  */
-
+#include <bits/stdc++.h>
+using namespace std;
 // @lc code=start
 class Solution {
 public:

@@ -39,6 +39,6 @@ int32_t main()
         freopen("output.txt", "w", stdout);
     #endif
     Solution sol;
-    cout << sol.numTrees(3) << endl;
+    cout << sol.numTrees(8) << endl;
     return 0;
 }
