@@ -4,7 +4,6 @@
  * [133] Clone Graph
  */
 
-// @lc code=start
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -29,6 +28,7 @@ public:
         neighbors = _neighbors;
     }
 };
+// @lc code=start
 
 class Solution 
 {

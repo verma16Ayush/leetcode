@@ -4,7 +4,6 @@
 [236] Lowest Common Ancestor of a Binary Tree
  */
 
-// @lc code=start
 #include <bits/stdc++.h>
 using namespace std;
 struct TreeNode {
@@ -13,6 +12,7 @@ struct TreeNode {
     TreeNode *right;
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
+// @lc code=start
 class Solution {
 public:
 
@@ -41,23 +41,77 @@ public:
     // }
 
     // ~400ms
-    bool dfs(TreeNode* root, TreeNode* t1, TreeNode* t2)
+    // bool dfs(TreeNode* root, TreeNode* t1, TreeNode* t2)
+    // {
+    //     if(root == nullptr) return root;
+    //     if(root == t1 || root == t2) return root;
+    //     return dfs(root->left, t1, t2) || dfs(root->right, t1, t2);
+    // }
+
+    // TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) 
+    // {
+    //     if(!root) return root;
+    //     if(root == p || root == q) return root;
+
+    //     auto res1 = dfs(root->left, p, q);
+    //     auto res2 = dfs(root->right, p, q);
+
+    //     if(res1 && res2) return root;
+    //     else if(res1) return lowestCommonAncestor(root->left, p, q);
+    //     return lowestCommonAncestor(root->right, p, q);
+    // }
+
+    // 1200ms
+    // bool dfs(TreeNode* root, TreeNode* toFind)
+    // {
+    //     if(!root)
+    //         return false;
+    //     if(root == toFind)
+    //         return true;
+    //     return dfs(root->left, toFind) || dfs(root->right, toFind);
+    // }
+
+    // TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
+    // {
+    //     if(root == p || root == q)
+    //         return root;
+    //     bool found_p_in_rsub = dfs(root->right, p);
+    //     bool found_p_in_lsub = dfs(root->left, p);
+
+    //     bool found_q_in_rsub = dfs(root->right, q);
+    //     bool found_q_in_lsub = dfs(root->left, q);
+
+    //     if((found_p_in_lsub && found_q_in_rsub) || (found_p_in_rsub && found_q_in_lsub))
+    //         return root;
+        
+    //     else if(found_p_in_lsub)
+    //         return lowestCommonAncestor(root->left, p, q);
+    //     return lowestCommonAncestor(root->right, p, q);
+    // }
+
+    bool dfs(TreeNode* root, TreeNode* p, TreeNode* q)
     {
-        if(root == nullptr) return root;
-        if(root == t1 || root == t2) return root;
-        return dfs(root->left, t1, t2) || dfs(root->right, t1, t2);
+        if(!root)
+            return false;
+        if(root == p || root == q)
+            return true;
+        return dfs(root->left, p, q) || dfs(root->right, p, q);
     }
 
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) 
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
     {
-        if(!root) return root;
-        if(root == p || root == q) return root;
+        if(!root)
+            return nullptr;
+        if(root == p || root == q)
+            return root;
+        
+        int lres = dfs(root->left, p, q);
+        int rres = dfs(root->right, p, q);
 
-        auto res1 = dfs(root->left, p, q);
-        auto res2 = dfs(root->right, p, q);
-
-        if(res1 && res2) return root;
-        else if(res1) return lowestCommonAncestor(root->left, p, q);
+        if(lres && rres)
+            return root;
+        else if(lres)
+            return lowestCommonAncestor(root->left, p, q);
         return lowestCommonAncestor(root->right, p, q);
     }
     

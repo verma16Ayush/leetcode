@@ -37,7 +37,7 @@ public:
     {
         if(i == 81) return true;
         if(board[i / 9][i % 9] != '.') return dfs(board, i + 1);
-        for(char c = '1'; c <= '9'; c++)lee
+        for(char c = '1'; c <= '9'; c++)
         {
             if(validate(board, i / 9, i % 9, c))
             {
