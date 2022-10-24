@@ -20,22 +20,37 @@ struct TreeNode {
 // @lc code=start
 class Solution {
 public:
-    vector<TreeNode*> temp;
-    void Inorder(TreeNode* root)
+    vector<TreeNode*> inorder;
+    void DFSHelper(TreeNode* root)
     {
-        if(!root) return;
-        Inorder(root->left);
-        temp.push_back(root);
-        Inorder(root->right);
+        if(root == nullptr)
+            return;
+        if(root->left)
+            DFSHelper(root->left);
+        inorder.push_back(root);
+        if(root->right)
+            DFSHelper(root->right);
     }
     void recoverTree(TreeNode* root) {
-        Inorder(root);
-        TreeNode* one, *two;
-        for(int i = 0; i < temp.size() - 1; i++)
+        DFSHelper(root);
+        vector<int> swaps;
+        int i = 0, j = inorder.size() - 1;
+        while(i < inorder.size() - 1)
         {
-            
+            if(inorder[i]->val > inorder[i + 1]->val)
+                break;
+            i++;
         }
-        return;
+
+        while(j > 0)
+        {
+            if(inorder[j]->val < inorder[j - 1]->val)
+                break;
+            j--;
+        }
+        int c = inorder[i]->val;
+        inorder[i]->val = inorder[j]->val;
+        inorder[j]->val = c;
     }
 };
 // @lc code=end
@@ -44,7 +59,8 @@ TreeNode* BuildTree()
 {
     int t;
     cin >> t;
-    if(t == -1) return nullptr;
+    if(t == -1)
+        return nullptr;
     TreeNode* root = new TreeNode(t);
     root->left = BuildTree();
     root->right = BuildTree();
@@ -58,7 +74,6 @@ int32_t main()
         freopen("output.txt", "w", stdout);
     #endif
     TreeNode* root = BuildTree();
-    Solution sol;
-    sol.recoverTree(root);
+    Solution().recoverTree(root);
     return 0;
 }

@@ -78,7 +78,7 @@
         "stack": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Disabled",
-    "python.pythonPath": "/bin/python3.8",
+    "python.pythonPath": ".venv/bin/python",
     "editor.fontFamily": "'Jetbrains Mono', monospace",
     "editor.minimap.enabled": false,
     "C_Cpp.dimInactiveRegions": false,

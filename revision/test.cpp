@@ -1,28 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
-class Solution {
-public:
-    int GetChildren(vector<int>& a, int pile)
+
+int32_t main()
+{
+    #ifdef LOCAL_PROJECT
+        freopen("input.txt", "r", stdin);
+        freopen("output.txt", "w", stdout);
+    #endif
+    int num = 782;
+    int c = 0;
+    while(num != 0)
     {
-        int children = 0;
-        for(int candies : a)
-        {
-            children += candies / pile;
-        }
-        return children;
+        num = num / 10;
+        c++;
     }
-    int maximumCandies(vector<int>& candies, long long k) {
-        int st = 0, en = *max_element(candies.begin(), candies.end());
-        int mid;
-        while(st < en)
-        {
-            mid = (st + en) / 2;
-            int children = GetChildren(candies, mid);
-            if(children > k)
-                en = mid - 1;
-            else
-                st = mid + 1;
-        }
-        return st;
-    }
-};
+    cout<< c;
+    return 0;
+}

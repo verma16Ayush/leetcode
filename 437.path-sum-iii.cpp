@@ -4,7 +4,6 @@
 [437] Path Sum III
  */
 
-// @lc code=start
 /**
 Definition for a binary tree node.
  */
@@ -19,6 +18,7 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+// @lc code=start
 class Solution {
 public:
     int ans;

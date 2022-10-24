@@ -1,7 +1,7 @@
 /*
-@lc app=leetcode id=99 lang=cpp
+@lc app=leetcode id=897 lang=cpp
  *
-[99] Recover Binary Search Tree
+[897] Increasing Order Search Tree
  */
 
 /**
@@ -20,31 +20,34 @@ struct TreeNode {
 // @lc code=start
 class Solution {
 public:
-    vector<TreeNode*> temp;
-    void Inorder(TreeNode* root)
+    // vector<int> temp;
+    TreeNode* res;
+    TreeNode* cur;
+    void DFSHelper(TreeNode* root)
     {
-        if(!root) return;
-        Inorder(root->left);
-        temp.push_back(root);
-        Inorder(root->right);
+        if(!root)
+            return;
+        if(root->left)
+            DFSHelper(root->left);
+        res->right = new TreeNode(root->val);
+        res = res->right;
+        if(root->right)
+            DFSHelper(root->right);
     }
-    void recoverTree(TreeNode* root) {
-        Inorder(root);
-        TreeNode* one, *two;
-        for(int i = 0; i < temp.size() - 1; i++)
-        {
-            
-        }
-        return;
+    TreeNode* increasingBST(TreeNode* root) {
+        res = new TreeNode();
+        cur = res;
+        DFSHelper(root);
+        return cur->right;
     }
 };
 // @lc code=end
-
 TreeNode* BuildTree()
 {
     int t;
     cin >> t;
-    if(t == -1) return nullptr;
+    if(t == -1)
+        return nullptr;
     TreeNode* root = new TreeNode(t);
     root->left = BuildTree();
     root->right = BuildTree();
@@ -58,7 +61,6 @@ int32_t main()
         freopen("output.txt", "w", stdout);
     #endif
     TreeNode* root = BuildTree();
-    Solution sol;
-    sol.recoverTree(root);
+    Solution().increasingBST(root);
     return 0;
 }
